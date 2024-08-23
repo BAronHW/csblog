@@ -5,10 +5,11 @@ import './output.css'
 import Header from './Components/Header'
 
 function App() {
-  
+  const [darkmode , setdarkmode] = useState(true);
+
   return (
-    <div className='bg-slate-700 text-cyan-600 min-h-screen'>
-      <Header></Header>
+    <div className={`${darkmode ? "bg-slate-700 text-cyan-600 min-h-screen" : "bg-slate-300 text-cyan-600 min-h-screen"}`}>
+      <Header darkmode={darkmode} setdarkmode={setdarkmode}></Header>
     </div>
   )
 }
