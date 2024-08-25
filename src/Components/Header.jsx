@@ -9,7 +9,7 @@ const Header = ({darkmode, setdarkmode}) => {
     }
     
   return (
-    <header className="bg-white dark:bg-gray-800 shadow-sm">
+    <header className={`${darkmode ? "bg-white dark:bg-gray-800 shadow-sm" : "bg-lightmodeheader"}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-4">
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
@@ -22,7 +22,7 @@ const Header = ({darkmode, setdarkmode}) => {
 
               onClick={handledarkmodeclick}
             >
-              {darkmode?<Moon size={20} /> : <Sun size={20}/>}
+              {darkmode ? <Moon size={20} /> : <Sun size={20}/>}
             </button>
             <button
               className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
