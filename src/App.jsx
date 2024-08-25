@@ -8,7 +8,7 @@ function App() {
   const [darkmode , setdarkmode] = useState(true);
 
   return (
-    <div className={`${darkmode ? "bg-slate-700 text-cyan-600 min-h-screen" : "bg-slate-300 text-cyan-600 min-h-screen"}`}>
+    <div className={`${darkmode ? "bg-slate-700 text-cyan-600 min-h-screen" : "bg-lightmode text-cyan-600 min-h-screen"}`}>
       <Header darkmode={darkmode} setdarkmode={setdarkmode}></Header>
     </div>
   )
