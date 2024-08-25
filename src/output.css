@@ -623,6 +623,11 @@ video {
   background-color: rgb(192 199 194 / var(--tw-bg-opacity));
 }
 
+.bg-lightmodeheader {
+  --tw-bg-opacity: 1;
+  background-color: rgb(122 134 120 / var(--tw-bg-opacity));
+}
+
 .bg-slate-700 {
   --tw-bg-opacity: 1;
   background-color: rgb(51 65 85 / var(--tw-bg-opacity));
@@ -631,11 +636,6 @@ video {
 .bg-white {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
-}
-
-.bg-lightmodeheader {
-  --tw-bg-opacity: 1;
-  background-color: rgb(122 134 120 / var(--tw-bg-opacity));
 }
 
 .p-2 {
