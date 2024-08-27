@@ -3,7 +3,7 @@ import { Moon, LogIn, Sun, LogOut } from 'lucide-react';
 import { getAuth, signInWithPopup, GoogleAuthProvider, signOut } from "firebase/auth";
 import { provider } from '../Firebase';
 
-const Header = ({darkmode, setdarkmode, setLoggedIn, loggedIn, username, setUsername, profilePic, setProfilepic}) => {
+const Header = ({darkmode, setdarkmode, setLoggedIn, loggedIn, username, setUsername, profilePic, setProfilepic, setuser}) => {
 
     const handledarkmodeclick = () => {
         setdarkmode(!darkmode);
@@ -14,6 +14,8 @@ const Header = ({darkmode, setdarkmode, setLoggedIn, loggedIn, username, setUser
       signInWithPopup(auth, provider)
         .then((result) => {
           const user = result.user;
+          setuser(user);
+          console.log(user)
           setLoggedIn(true);
           setUsername(user.displayName);
           setProfilepic(user.photoURL);
