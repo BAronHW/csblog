@@ -19,7 +19,7 @@ function App() {
       <Header darkmode={darkmode} setdarkmode={setdarkmode} setLoggedIn={setLoggedIn} loggedIn={loggedIn} username={username} setUsername={setUsername} profilePic={profilePic} setProfilepic={setProfilepic}></Header>
         <Routes>
           {loggedIn && <Route path='/' element={<BlogList/>}></Route>}
-          {/* <Route path='/login' element={<Login/>}></Route> */}
+          
         </Routes>
     </div>
     </Router>
