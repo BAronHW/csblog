@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './output.css'
@@ -11,7 +11,24 @@ function App() {
   const [darkmode , setdarkmode] = useState(true);
   const [loggedIn , setLoggedIn] = useState(false);
   const [username, setUsername] = useState("");
+  const [currentUserUUID, setcurrentUserUUID] = useState(null);
   const [profilePic, setProfilepic] = useState("");
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  const checkIfAdmin = (uuid) =>{
+    // if there is a current user then check
+    // if no current user dont check 
+    // if current user matches admin uuid then return set is admin to true
+    if(!currentUserUUID) return;
+    if(uuid == currentUserUUID){
+      setIsAdmin(true);
+    }
+  }
+
+  useEffect(()=>{
+    // everytime the username changes then call check if admin
+    checkIfAdmin(currentUserUUID);
+  },[username])
 
   return (
   <Router>
