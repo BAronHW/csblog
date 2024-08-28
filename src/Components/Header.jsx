@@ -3,7 +3,7 @@ import { Moon, LogIn, Sun, LogOut } from 'lucide-react';
 import { getAuth, signInWithPopup, GoogleAuthProvider, signOut } from "firebase/auth";
 import { provider } from '../Firebase';
 
-const Header = ({darkmode, setdarkmode, setLoggedIn, loggedIn, username, setUsername, profilePic, setProfilepic, setuser}) => {
+const Header = ({darkmode, setdarkmode, setLoggedIn, loggedIn, username, setUsername, profilePic, setProfilepic, setuser, setIsAdmin}) => {
 
     const handledarkmodeclick = () => {
         setdarkmode(!darkmode);
@@ -25,11 +25,14 @@ const Header = ({darkmode, setdarkmode, setLoggedIn, loggedIn, username, setUser
     }
 
     const handlelogout = () => {
+      
       const auth = getAuth();
       signOut(auth).then(() => {
         setLoggedIn(false);
         setProfilepic("");
         setUsername("");
+        setIsAdmin(false)
+        
       }).catch((error) => {
         console.error("Logout error:", error);
       });
