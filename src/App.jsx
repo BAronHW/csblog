@@ -5,6 +5,7 @@ import './output.css';
 import Header from './Components/Header';
 import Login from './Components/Login';
 import BlogList from './Components/BlogList';
+import Footer from './Components/Footer';
 
 export const ThemeContext = createContext(null); // Export ThemeContext
 
@@ -63,6 +64,7 @@ function App() {
             <Route path='/' element={<BlogList isAdmin={isAdmin} />} />
           </Routes>
           <div>Admin status: {isAdmin ? "Admin" : "Not Admin"}</div>
+          <Footer></Footer>
         </div>
       </Router>
     </ThemeContext.Provider>
