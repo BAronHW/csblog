@@ -60,7 +60,7 @@ function App() {
             setIsAdmin={setIsAdmin}
           />
           <Routes>
-            {loggedIn && <Route path='/' element={<BlogList isAdmin={isAdmin} />} />}
+            <Route path='/' element={<BlogList isAdmin={isAdmin} />} />
           </Routes>
           <div>Admin status: {isAdmin ? "Admin" : "Not Admin"}</div>
         </div>

@@ -558,8 +558,16 @@ video {
   position: relative;
 }
 
-.m-2 {
-  margin: 0.5rem;
+.sticky {
+  position: sticky;
+}
+
+.top-0 {
+  top: 0px;
+}
+
+.z-50 {
+  z-index: 50;
 }
 
 .m-4 {
@@ -612,10 +620,6 @@ video {
   height: 2rem;
 }
 
-.h-full {
-  height: 100%;
-}
-
 .min-h-screen {
   min-height: 100vh;
 }
@@ -626,10 +630,6 @@ video {
 
 .w-96 {
   width: 24rem;
-}
-
-.w-full {
-  width: 100%;
 }
 
 .max-w-7xl {
@@ -733,6 +733,11 @@ video {
   background-color: rgb(122 134 120 / var(--tw-bg-opacity));
 }
 
+.bg-lightmodeloginbutton {
+  --tw-bg-opacity: 1;
+  background-color: rgb(154 154 157 / var(--tw-bg-opacity));
+}
+
 .bg-red-600 {
   --tw-bg-opacity: 1;
   background-color: rgb(220 38 38 / var(--tw-bg-opacity));
@@ -746,11 +751,6 @@ video {
 .bg-white {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
-}
-
-.bg-gray-600 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(75 85 99 / var(--tw-bg-opacity));
 }
 
 .bg-opacity-50 {
@@ -895,18 +895,9 @@ video {
   color: rgb(31 41 55 / var(--tw-text-opacity));
 }
 
-.text-inherit {
-  color: inherit;
-}
-
 .text-white {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
-}
-
-.text-gray-200 {
-  --tw-text-opacity: 1;
-  color: rgb(229 231 235 / var(--tw-text-opacity));
 }
 
 .antialiased {
@@ -963,6 +954,43 @@ video {
   background-color: rgb(185 28 28 / var(--tw-bg-opacity));
 }
 
+.hover\:bg-slate-700:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(51 65 85 / var(--tw-bg-opacity));
+}
+
+.hover\:bg-opacity-10:hover {
+  --tw-bg-opacity: 0.1;
+}
+
+.hover\:bg-opacity-5:hover {
+  --tw-bg-opacity: 0.05;
+}
+
+.hover\:bg-opacity-15:hover {
+  --tw-bg-opacity: 0.15;
+}
+
+.hover\:bg-opacity-30:hover {
+  --tw-bg-opacity: 0.3;
+}
+
+.hover\:bg-opacity-50:hover {
+  --tw-bg-opacity: 0.5;
+}
+
+.hover\:bg-opacity-80:hover {
+  --tw-bg-opacity: 0.8;
+}
+
+.hover\:bg-opacity-70:hover {
+  --tw-bg-opacity: 0.7;
+}
+
+.hover\:underline:hover {
+  text-decoration-line: underline;
+}
+
 .hover\:shadow-lg:hover {
   --tw-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
   --tw-shadow-colored: 0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);
@@ -978,10 +1006,6 @@ video {
   opacity: 0.85;
 }
 
-.focus\:opacity-85:focus {
-  opacity: 0.85;
-}
-
 .focus\:shadow-none:focus {
   --tw-shadow: 0 0 #0000;
   --tw-shadow-colored: 0 0 #0000;
@@ -989,10 +1013,6 @@ video {
 }
 
 .active\:opacity-\[0\.85\]:active {
-  opacity: 0.85;
-}
-
-.active\:opacity-85:active {
   opacity: 0.85;
 }
 

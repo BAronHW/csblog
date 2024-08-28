@@ -4,7 +4,6 @@ import { getAuth, signInWithPopup, GoogleAuthProvider, signOut } from "firebase/
 import { provider } from '../Firebase';
 
 const Header = ({darkmode, setdarkmode, setLoggedIn, loggedIn, username, setUsername, profilePic, setProfilepic, setuser, setIsAdmin}) => {
-
     const handledarkmodeclick = () => {
         setdarkmode(!darkmode);
     }
@@ -25,21 +24,19 @@ const Header = ({darkmode, setdarkmode, setLoggedIn, loggedIn, username, setUser
     }
 
     const handlelogout = () => {
-      
       const auth = getAuth();
       signOut(auth).then(() => {
         setLoggedIn(false);
         setProfilepic("");
         setUsername("");
-        setIsAdmin(false)
-        
+        setIsAdmin(false);
       }).catch((error) => {
         console.error("Logout error:", error);
       });
     }
-    
+   
   return (
-    <header className={`${darkmode ? "bg-gray-800 text-white" : "bg-lightmodeheader text-gray-800"} shadow-sm`}>
+    <header className={`${darkmode ? "bg-gray-800 text-white" : "bg-lightmodeheader text-gray-800"} sticky top-0 z-50 shadow-md`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-4">
           <h1 className="text-2xl font-bold">
@@ -53,7 +50,7 @@ const Header = ({darkmode, setdarkmode, setLoggedIn, loggedIn, username, setUser
             >
               {darkmode ? <Sun size={20} /> : <Moon size={20} />}
             </button>
-            
+           
             {loggedIn ? (
               <>
                 <div className="flex items-center space-x-2 bg-opacity-50 bg-gray-200 rounded-full p-1 pr-3">
@@ -70,13 +67,14 @@ const Header = ({darkmode, setdarkmode, setLoggedIn, loggedIn, username, setUser
               </>
             ) : (
               <button
-                className="inline-flex items-center px-4 py-2 rounded-md bg-indigo-600 hover:bg-indigo-700"
+                className={`inline-flex items-center px-4 py-2 rounded-md ${darkmode? " bg-indigo-600 hover:bg-indigo-700" : "bg-lightmodeloginbutton hover:bg-opacity-70"}`}
                 onClick={handlesigninclick}
               >
                 <LogIn className="mr-2" size={16} />
                 Login
               </button>
             )}
+            <a href="https://baron-web.netlify.app/" className="hover:underline">My Portfolio Website</a>
           </div>
         </div>
       </div>
