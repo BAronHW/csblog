@@ -1,13 +1,14 @@
-// App.jsx
 import { createContext, useEffect, useState } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import './output.css';
 import Header from './Components/Header';
 import Login from './Components/Login';
 import BlogList from './Components/BlogList';
 import Footer from './Components/Footer';
+import CreateCard from './Components/CreateCard';
+import ErrorPage from './Components/ErrorPage';
 
-export const ThemeContext = createContext(null); // Export ThemeContext
+export const ThemeContext = createContext(null);
 
 function App() {
   const [darkmode, setdarkmode] = useState(true);
@@ -19,16 +20,12 @@ function App() {
   const [user, setuser] = useState({});
 
   const checkIfAdmin = (uuid) => {
-    console.log("Checking admin status for UUID:", uuid);
     if (!uuid) {
-      console.log("No UUID provided, not an admin");
       setIsAdmin(false);
       return;
     }
-
     const adminUUID = import.meta.env.VITE_ADMIN_UUID || "fKjaTf50t7UZhxknIl93zM8HbAr1";
     console.log("Admin UUID:", adminUUID);
-
     if (uuid === adminUUID) {
       console.log("User is admin");
       setIsAdmin(true);
@@ -44,27 +41,32 @@ function App() {
   }, [loggedIn]);
 
   return (
-    <ThemeContext.Provider value={darkmode}>
+    <ThemeContext.Provider value={{darkmode, isAdmin}}>
       <Router>
         <div className={`${darkmode ? "bg-slate-700 text-cyan-600 min-h-screen" : "bg-lightmode text-cyan-600 min-h-screen"}`}>
-          <Header 
-            darkmode={darkmode} 
-            setdarkmode={setdarkmode} 
-            setLoggedIn={setLoggedIn} 
-            loggedIn={loggedIn} 
-            username={username} 
-            setUsername={setUsername} 
-            profilePic={profilePic} 
+          <Header
+            darkmode={darkmode}
+            setdarkmode={setdarkmode}
+            setLoggedIn={setLoggedIn}
+            loggedIn={loggedIn}
+            username={username}
+            setUsername={setUsername}
+            profilePic={profilePic}
             setProfilepic={setProfilepic}
             setCurrentUserUUID={setCurrentUserUUID}
             setuser={setuser}
             setIsAdmin={setIsAdmin}
+            isAdmin={isAdmin}
           />
           <Routes>
             <Route path='/' element={<BlogList isAdmin={isAdmin} />} />
+            <Route 
+              path='/create' 
+              element={isAdmin && <CreateCard />} 
+            />
+            <Route path='/error' element={<ErrorPage />} />
           </Routes>
-          <div>Admin status: {isAdmin ? "Admin" : "Not Admin"}</div>
-          <Footer></Footer>
+          <Footer />
         </div>
       </Router>
     </ThemeContext.Provider>

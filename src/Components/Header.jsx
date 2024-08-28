@@ -1,45 +1,75 @@
 import React from 'react';
-import { Moon, LogIn, Sun, LogOut } from 'lucide-react';
+import { Moon, LogIn, Sun, LogOut, PlusCircle } from 'lucide-react';
 import { getAuth, signInWithPopup, GoogleAuthProvider, signOut } from "firebase/auth";
 import { provider } from '../Firebase';
+import { useNavigate } from 'react-router';
 
-const Header = ({darkmode, setdarkmode, setLoggedIn, loggedIn, username, setUsername, profilePic, setProfilepic, setuser, setIsAdmin}) => {
-    const handledarkmodeclick = () => {
-        setdarkmode(!darkmode);
-    }
+const Header = ({
+  darkmode,
+  setdarkmode,
+  setLoggedIn,
+  loggedIn,
+  username,
+  setUsername,
+  profilePic,
+  setProfilepic,
+  setuser,
+  setIsAdmin,
+  isAdmin
+}) => {
+  const navigate = useNavigate();
 
-    const handlesigninclick = () => {
-      const auth = getAuth();
-      signInWithPopup(auth, provider)
-        .then((result) => {
-          const user = result.user;
-          setuser(user);
-          console.log(user)
-          setLoggedIn(true);
-          setUsername(user.displayName);
-          setProfilepic(user.photoURL);
-        }).catch((error) => {
-          console.error("Sign-in error:", error);
-        });
-    }
+  const handledarkmodeclick = () => {
+    setdarkmode(!darkmode);
+  }
 
-    const handlelogout = () => {
-      const auth = getAuth();
-      signOut(auth).then(() => {
-        setLoggedIn(false);
-        setProfilepic("");
-        setUsername("");
-        setIsAdmin(false);
+  const handlesigninclick = () => {
+    const auth = getAuth();
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        const user = result.user;
+        setuser(user);
+        setLoggedIn(true);
+        setUsername(user.displayName);
+        setProfilepic(user.photoURL);
+        // Check if the user is an admin here
+        checkIfAdmin(user.uid);
       }).catch((error) => {
-        console.error("Logout error:", error);
+        console.error("Sign-in error:", error);
       });
-    }
-   
+  }
+
+  const handlelogout = () => {
+    const auth = getAuth();
+    signOut(auth).then(() => {
+      setLoggedIn(false);
+      setProfilepic("");
+      setUsername("");
+      setIsAdmin(false);
+      navigate('/')
+    }).catch((error) => {
+      console.error("Logout error:", error);
+    });
+  }
+
+  const handleaddclick = () => {
+    navigate('/create')
+  }
+
+  // Function to check if user is admin
+  const checkIfAdmin = (uid) => {
+    const adminUUID = import.meta.env.VITE_ADMIN_UUID || "fKjaTf50t7UZhxknIl93zM8HbAr1";
+    setIsAdmin(uid === adminUUID);
+  }
+
   return (
     <header className={`${darkmode ? "bg-gray-800 text-white" : "bg-lightmodeheader text-gray-800"} sticky top-0 z-50 shadow-md`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-4">
-          <h1 className="text-2xl font-bold">
+          <h1
+            className="text-2xl font-bold cursor-pointer transition-all duration-300 ease-in-out bg-gradient-to-r from-white via-yellow-300 to-purple-500 bg-clip-text hover:text-transparent"
+            onClick={() => {navigate('/')}}
+          >
             Aaron's Blog
           </h1>
           <div className="flex items-center space-x-4">
@@ -75,6 +105,14 @@ const Header = ({darkmode, setdarkmode, setLoggedIn, loggedIn, username, setUser
               </button>
             )}
             <a href="https://baron-web.netlify.app/" className="hover:underline">My Portfolio Website</a>
+            {loggedIn && isAdmin && (
+              <button 
+                className='bg-green-400 p-2 rounded-full hover:bg-green-500 transition-colors duration-200'
+                onClick={handleaddclick}
+              >
+                <PlusCircle className='' size={22}/>
+              </button>
+            )}
           </div>
         </div>
       </div>
