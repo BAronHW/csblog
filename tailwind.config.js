@@ -7,7 +7,8 @@ export default {
     extend: {
       colors:{
         lightmode: '#c0c7c2',
-        lightmodeheader: '#7A8678'
+        lightmodeheader: '#7A8678',
+        lightmodeloginbutton: '#9a9a9d'
       }
     },
   },
