@@ -7,6 +7,7 @@ import BlogList from './Components/BlogList';
 import Footer from './Components/Footer';
 import CreateCard from './Components/CreateCard';
 import ErrorPage from './Components/ErrorPage';
+import BlogDetailPage from './Components/BlogDetailPage';
 
 export const ThemeContext = createContext(null);
 
@@ -65,6 +66,7 @@ function App() {
               element={isAdmin && <CreateCard />} 
             />
             <Route path='/error' element={<ErrorPage />} />
+            <Route path='/blog/:id' element={<BlogDetailPage />}/>
           </Routes>
           <Footer />
         </div>

@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import BlogCard from './BlogCard'
 import { collection, getDocs } from "firebase/firestore";
 import { db } from '../Firebase';
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
 
 function BlogList() {
   const [blogs, setBlogs] = useState([]);
@@ -26,12 +28,26 @@ function BlogList() {
         setLoading(false);
       }
     };
-
     getBlogs();
   }, []);
 
   if (loading) {
-    return <div className="text-center py-10">Loading blogs...</div>;
+    return (
+      <Box 
+        sx={{ 
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0
+        }}
+      >
+        <CircularProgress />
+      </Box>
+    )
   }
 
   if (error) {
@@ -49,6 +65,7 @@ function BlogList() {
             time={blog.time}
             img={blog.img}
             content={blog.content}
+            id={blog.id}
           />
         ))
       ) : (

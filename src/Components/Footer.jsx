@@ -26,7 +26,7 @@ function Footer() {
           </div>
         </div>
       </div>
-      <div className='mt-8 text-center text-sm text-gray-800'>
+      <div className='mt-8 text-center text-sm text-inherit'>
         © {new Date().getFullYear()} Aaron Wan. All rights reserved.
       </div>
     </footer>
