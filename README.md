@@ -24,7 +24,7 @@ This project is a personal blog platform designed to share and discuss various t
 
 1. Clone the repository:
    ```
-   git clone https://github.com/your-username/your-repo-name.git
+   git clone https://github.com/BAronHW/csblog
    ```
 
 2. Install dependencies:
@@ -46,9 +46,6 @@ This project is a personal blog platform designed to share and discuss various t
 
 - `/src`: Source files for the React application
   - `/components`: Reusable React components
-  - `/pages`: Main page components
-  - `/context`: Context providers for state management
-  - `/styles`: CSS and Tailwind configuration
 - `/public`: Static files
 
 ## Contributing
@@ -69,6 +66,6 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 Aaron Wan - baronhw808@gmail.com
 
-Project Link: [https://github.com/your-username/your-repo-name](https://github.com/your-username/your-repo-name)
+Project Link: [https://github.com/BAronHW/csblog](https://github.com/BAronHW/csblog)
 
 ---
