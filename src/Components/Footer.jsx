@@ -5,7 +5,7 @@ import { ThemeContext } from '../App'
 function Footer() {
     const theme = useContext(ThemeContext);
   return (
-    <footer className={`${theme.darkmode ? "bg-slate-800 text-white" : "bg-lightmodeheader text-gray-800"}  py-10 px-4 sm:px-6 md:px-8`}>
+    <footer className={`${theme.darkmode ? "bg-slate-800 text-white" : "bg-lightmodeheader text-gray-800"}  py-10 px-4 sm:px-6 md:px-8 sticky top-[100vh]`}>
       <div className='max-w-6xl mx-auto flex flex-col sm:flex-row justify-between items-start sm:items-center space-y-6 sm:space-y-0'>
         <div className='space-y-4'>
           <h3 className='text-xl font-semibold'>Get in touch</h3>
