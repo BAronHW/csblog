@@ -39,7 +39,7 @@ This project is a personal blog platform designed to share and discuss various t
 
 4. Start the development server:
    ```
-   npm start
+   npm run dev
    ```
 
 ## Project Structure
