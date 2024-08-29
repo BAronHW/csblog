@@ -1,15 +1,19 @@
-import React, { useEffect, useState } from 'react'
-import { doc, getDoc } from "firebase/firestore";
+import React, { useContext, useEffect, useState } from 'react'
+import { doc, getDoc, deleteDoc } from "firebase/firestore";
 import { db } from '../Firebase';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
+import { CircleX } from 'lucide-react';
+import { ThemeContext } from '../App';
 
 function BlogDetailPage() {
     const [blogData, setBlogData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const { id } = useParams();
+    const navigate = useNavigate();
+    const theme = useContext(ThemeContext);
 
     useEffect(() => {
         const getBlogData = async () => {
@@ -17,9 +21,8 @@ function BlogDetailPage() {
                 setLoading(true);
                 const docRef = doc(db, "blog", id);
                 const docSnap = await getDoc(docRef);
-
                 if (docSnap.exists()) {
-                    setBlogData(docSnap.data());
+                    setBlogData({ id: docSnap.id, ...docSnap.data() });
                 } else {
                     setError("No such document!");
                 }
@@ -35,6 +38,19 @@ function BlogDetailPage() {
             getBlogData();
         }
     }, [id]);
+
+    const deleteThisPage = async () => {
+        try {
+            setLoading(true);
+            await deleteDoc(doc(db, "blog", id));
+            navigate('/');
+        } catch (err) {
+            console.error("Error deleting document: ", err);
+            setError("Failed to delete the blog post. Please try again later.");
+        } finally {
+            setLoading(false);
+        }
+    }
 
     if (loading) {
         return (
@@ -54,7 +70,17 @@ function BlogDetailPage() {
 
     return (
         <div className="container mx-auto px-4 py-8">
-            <h1 className="text-3xl font-bold mb-4">{blogData.title}</h1>
+            <div className="flex justify-between items-center mb-4">
+                <h1 className="text-3xl font-bold">{blogData.title}</h1>
+                {theme.isAdmin && <button
+                    onClick={deleteThisPage}
+                    className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded flex items-center"
+                >
+                    <CircleX className="mr-2" />
+                    Delete Post
+                </button>
+                }
+            </div>
             <img src={blogData.img} alt={blogData.title} className="w-full h-64 object-cover mb-4 rounded-lg" />
             <p className="text-gray-600 mb-2">Subject: {blogData.subject}</p>
             <p className="text-gray-600 mb-4">Time: {blogData.time}</p>

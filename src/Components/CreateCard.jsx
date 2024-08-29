@@ -1,9 +1,14 @@
 import React, { useContext } from 'react'
 import { ThemeContext } from '../App'
 import { useFormik } from 'formik';
+import { doc, setDoc, collection, addDoc } from "firebase/firestore";
+import { db } from '../Firebase';
+import { content } from 'flowbite-react/tailwind';
+import { useNavigate } from 'react-router';
 
 function CreateCard() {
   const { darkmode } = useContext(ThemeContext);
+  const navigate = useNavigate();
 
   const formik = useFormik({
     initialValues: {
@@ -20,12 +25,16 @@ function CreateCard() {
       }
       return errors;
     },
-    onSubmit: (values, { setSubmitting, resetForm }) => {
-      // Here you would typically send the data to your backend
+    onSubmit: async (values, { setSubmitting, resetForm }) => {
+      const docref = await addDoc(collection(db,"blog"),{
+        title: formik.values.title,
+        content: formik.values.content
+      })
       console.log('Form submitted with values:', values);
       alert('Card created successfully!'+formik.values.content+"and"+formik.values.title);
       resetForm();
       setSubmitting(false);
+      navigate('/')
     },
   });
 

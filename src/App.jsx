@@ -42,7 +42,7 @@ function App() {
   }, [loggedIn]);
 
   return (
-    <ThemeContext.Provider value={{darkmode, isAdmin}}>
+    <ThemeContext.Provider value={{darkmode, isAdmin, loggedIn}}>
       <Router>
         <div className={`${darkmode ? "bg-slate-700 text-cyan-600 min-h-screen" : "bg-lightmode text-cyan-600 min-h-screen"}`}>
           <Header
