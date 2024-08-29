@@ -1,12 +1,59 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import BlogCard from './BlogCard'
+import { collection, getDocs } from "firebase/firestore";
+import { db } from '../Firebase';
 
 function BlogList() {
+  const [blogs, setBlogs] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const getBlogs = async () => {
+      try {
+        setLoading(true);
+        const blogCollection = collection(db, "blog");
+        const blogSnapshot = await getDocs(blogCollection);
+        const blogList = blogSnapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        }));
+        setBlogs(blogList);
+      } catch (err) {
+        console.error("Error fetching blogs: ", err);
+        setError("Failed to fetch blogs. Please try again later.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    getBlogs();
+  }, []);
+
+  if (loading) {
+    return <div className="text-center py-10">Loading blogs...</div>;
+  }
+
+  if (error) {
+    return <div className="text-center py-10 text-red-500">{error}</div>;
+  }
+
   return (
-    <div className='flex items-center justify-center m-4 flex-wrap gap-2'>
-      <BlogCard title={"test"} subject={"tech"} time={10} img={"https://images.unsplash.com/photo-1540553016722-983e48a2cd10?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=800&amp;q=80"} content={"testing testing"}></BlogCard>
-      <BlogCard title={"test"} subject={"tech"} time={10} img={"https://images.unsplash.com/photo-1540553016722-983e48a2cd10?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=800&amp;q=80"} content={"testing testing"}></BlogCard>
-      <BlogCard title={"test"} subject={"tech"} time={10} img={"https://images.unsplash.com/photo-1540553016722-983e48a2cd10?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=800&amp;q=80"} content={"testing testing"}></BlogCard>
+    <div className='flex flex-wrap justify-center gap-4 m-4'>
+      {blogs.length > 0 ? (
+        blogs.map(blog => (
+          <BlogCard
+            key={blog.id}
+            title={blog.title}
+            subject={blog.subject}
+            time={blog.time}
+            img={blog.img}
+            content={blog.content}
+          />
+        ))
+      ) : (
+        <div className="text-center py-10">No blogs found.</div>
+      )}
     </div>
   )
 }
