@@ -2,7 +2,7 @@
 
 ## Overview
 
-This project is a personal blog platform designed to share and discuss various topics in computer science, machine learning, and deep learning. It serves as a space to explore cutting-edge technologies, share insights, and foster discussions within the tech community.
+This project is a personal blog platform designed to share and discuss various topics in computer science, machine learning, and deep learning. It serves as a space to explore cutting-edge technologies, share insights, and acts as a sign of where my interests lay.
 
 ## Features
 
