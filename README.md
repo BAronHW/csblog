@@ -24,7 +24,7 @@ This project is a personal blog platform designed to share and discuss various t
 
 1. Clone the repository:
    ```
-   git clone https://github.com/BAronHW/csblog
+   git clone https://github.com/BAronHW/csblog.git
    ```
 
 2. Install dependencies:
