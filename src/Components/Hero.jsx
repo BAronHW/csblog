@@ -15,7 +15,7 @@ function Hero() {
             <span className="block text-blue-600">Computer Science & AI</span>
           </h1>
           <p className="mt-3 max-w-md mx-auto text-base sm:text-lg md:mt-5 md:text-xl md:max-w-3xl">
-            Dive into the latest developments in Computer Science, Machine Learning, and Deep Learning with in-depth articles and tutorials.
+            Dive into my journey in computer science, software engineering, machine learning and deep learning.
           </p>
           <div className="mt-10 flex justify-center space-x-6">
             <Link to={"/blog"}>

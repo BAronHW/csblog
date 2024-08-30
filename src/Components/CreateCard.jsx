@@ -1,19 +1,21 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { ThemeContext } from '../App'
 import { useFormik } from 'formik';
-import { doc, setDoc, collection, addDoc } from "firebase/firestore";
-import { db } from '../Firebase';
-import { content } from 'flowbite-react/tailwind';
+import { collection, addDoc } from "firebase/firestore";
+import { db, storage } from '../Firebase';
 import { useNavigate } from 'react-router';
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 function CreateCard() {
   const { darkmode } = useContext(ThemeContext);
   const navigate = useNavigate();
+  const [img, setImg] = useState(null);
 
   const formik = useFormik({
     initialValues: {
       title: '',
-      content: ''
+      content: '',
+      imgurl: ''
     },
     validate: values => {
       const errors = {};
@@ -26,17 +28,38 @@ function CreateCard() {
       return errors;
     },
     onSubmit: async (values, { setSubmitting, resetForm }) => {
-      const docref = await addDoc(collection(db,"blog"),{
-        title: formik.values.title,
-        content: formik.values.content
-      })
-      console.log('Form submitted with values:', values);
-      alert('Card created successfully!'+formik.values.content+"and"+formik.values.title);
-      resetForm();
-      setSubmitting(false);
-      navigate('/')
+      try {
+        let imgUrl = '';
+        if (img) {
+          const imgRef = ref(storage, `images/${Date.now()}_${img.name}`);
+          const snapshot = await uploadBytes(imgRef, img);
+          imgUrl = await getDownloadURL(snapshot.ref);
+        }
+
+        await addDoc(collection(db, "blog"), {
+          title: values.title,
+          content: values.content,
+          imgurl: imgUrl
+        });
+
+        alert('Card created successfully!');
+        resetForm();
+        setImg(null);
+        navigate('/');
+      } catch (error) {
+        console.error("Error creating card: ", error);
+        alert('Failed to create card. Please try again.');
+      } finally {
+        setSubmitting(false);
+      }
     },
   });
+
+  const handleImageChange = (event) => {
+    if (event.target.files[0]) {
+      setImg(event.target.files[0]);
+    }
+  };
 
   return (
     <div className={`flex flex-col items-center justify-start p-6 w-full min-h-screen ${
@@ -76,7 +99,27 @@ function CreateCard() {
             {formik.touched.content && formik.errors.content ? (
               <div className="text-red-500 mt-1">{formik.errors.content}</div>
             ) : null}
+          </div>          
+          <div className='flex flex-col gap-2 text-inherit'>
+            <label htmlFor="img">Image Upload</label>
+            <input 
+              type="file" 
+              id='img' 
+              name='img' 
+              onChange={handleImageChange}
+              accept="image/*"
+            />
           </div>
+          {img && (
+            <div className="mt-4">
+              <p>Selected Image:</p>
+              <img 
+                src={URL.createObjectURL(img)} 
+                alt="Selected" 
+                className="mt-2 max-w-full h-auto"
+              />
+            </div>
+          )}
           <button
             type="submit"
             className={`px-4 py-2 rounded ${

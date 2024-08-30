@@ -3,6 +3,8 @@ import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getAuth, GoogleAuthProvider } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
+import { getStorage } from "firebase/storage";
+
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -16,7 +18,8 @@ const firebaseConfig = {
   storageBucket: "csblog-1aa18.appspot.com",
   messagingSenderId: "299586585662",
   appId: "1:299586585662:web:d06924d0a5ee57e9fdbd6f",
-  measurementId: "G-RQRQSSB38F"
+  measurementId: "G-RQRQSSB38F",
+  storageBucket: 'gs://csblog-1aa18.appspot.com'
 };
 
 // Initialize Firebase
@@ -25,3 +28,4 @@ export const analytics = getAnalytics(app);
 export const auth = getAuth();
 export const provider = new GoogleAuthProvider();
 export const db = getFirestore(app);
+export const storage = getStorage(app);

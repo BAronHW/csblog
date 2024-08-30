@@ -73,7 +73,7 @@ function BlogDetailPage() {
         <div className="container mx-auto px-4 py-8">
             <div className="flex justify-between items-center mb-4">
                 <h1 className="text-3xl font-bold">{blogData.title}</h1>
-                {theme.isAdmin && <button
+                {theme.isAdmin && theme.loggedIn &&<button
                     onClick={deleteThisPage}
                     className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded flex items-center"
                 >

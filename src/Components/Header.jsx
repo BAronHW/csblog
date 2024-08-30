@@ -114,8 +114,7 @@ const Header = ({
                     className="inline-flex items-center px-4 py-2 rounded-md bg-red-600 hover:bg-red-700 transition-colors duration-200 text-white"
                     onClick={handlelogout}
                   >
-                    <LogOut className="mr-2" size={16} />
-                    Logout
+                    <LogOut className="" size={16} />
                   </button>
                 </>
               ) : (
@@ -123,8 +122,7 @@ const Header = ({
                   className={`inline-flex justify-center items-center px-4 py-2 rounded-md transition-colors duration-200 ${darkmode ? "bg-blue-600 hover:bg-blue-700" : "bg-blue-500 hover:bg-blue-600"} text-white`}
                   onClick={handlesigninclick}
                 >
-                  <LogIn className="mr-2" size={16} />
-                  Login
+                  <LogIn className="" size={16} />
                 </button>
               )}
               {loggedIn && isAdmin && (

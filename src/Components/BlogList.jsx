@@ -57,15 +57,16 @@ function BlogList() {
   return (
     <div className='flex flex-wrap justify-center gap-4 m-4'>
       {blogs.length > 0 ? (
-        blogs.map(blog => (
+        blogs.map((blog, index) => (
           <BlogCard
             key={blog.id}
             title={blog.title}
             subject={blog.subject}
             time={blog.time}
-            img={blog.img}
+            img={blog.imgurl}
             content={blog.content}
             id={blog.id}
+            blogNum={index}
           />
         ))
       ) : (
