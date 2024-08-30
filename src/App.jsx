@@ -8,6 +8,7 @@ import Footer from './Components/Footer';
 import CreateCard from './Components/CreateCard';
 import ErrorPage from './Components/ErrorPage';
 import BlogDetailPage from './Components/BlogDetailPage';
+import Hero from './Components/Hero'
 
 export const ThemeContext = createContext(null);
 
@@ -44,7 +45,7 @@ function App() {
   return (
     <ThemeContext.Provider value={{darkmode, isAdmin, loggedIn}}>
       <Router>
-        <div className={`${darkmode ? "bg-slate-700 text-cyan-600 min-h-screen" : "bg-lightmode text-cyan-600 min-h-screen"}`}>
+        <div className={`${darkmode ? "bg-slate-700 text-inherit min-h-screen" : "bg-lightmode text-cyan-600 min-h-screen"}`}>
           <Header
             darkmode={darkmode}
             setdarkmode={setdarkmode}
@@ -60,7 +61,8 @@ function App() {
             isAdmin={isAdmin}
           />
           <Routes>
-            <Route path='/' element={<BlogList isAdmin={isAdmin} />} />
+            <Route path='/' element={<Hero />}/>
+            <Route path='/blog' element={<BlogList isAdmin={isAdmin} />} />
             <Route 
               path='/create' 
               element={isAdmin && <CreateCard />} 

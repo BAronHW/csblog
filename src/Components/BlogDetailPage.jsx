@@ -41,6 +41,7 @@ function BlogDetailPage() {
 
     const deleteThisPage = async () => {
         try {
+            if(!theme.isAdmin)return
             setLoading(true);
             await deleteDoc(doc(db, "blog", id));
             navigate('/');
