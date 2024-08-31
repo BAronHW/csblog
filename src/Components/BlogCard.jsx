@@ -55,7 +55,7 @@ function BlogCard({ title, subject, time, img, content, id, blogNum }) {
           {truncatedContent}
         </p>
       </div>
-      <div className="p-6 pt-0 space-y-2">
+      <div className="p-6 pt-0 flex flex-col gap-2">
         <Link to={`/blog/${id}`} className="block w-full">
           <button
             className="w-full align-middle select-none font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 px-6 rounded-lg bg-gray-900 text-white shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none hover:cursor-pointer"
@@ -71,6 +71,17 @@ function BlogCard({ title, subject, time, img, content, id, blogNum }) {
           >
             {loading ? 'Deleting...' : 'Delete'}
           </button>
+        )}
+        {theme.isAdmin && theme.loggedIn && (
+          <Link to={`edit/${id}`}>
+            <button
+              disabled={loading}
+              className={`w-full align-middle bg-orange-500 font-bold font-sans select-none text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs rounded-lg text-white shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none hover:cursor-pointer py-3 px-6 ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+            >
+              {'Edit'}
+            </button>
+          </Link>
+          
         )}
         {error && <p className="text-red-500 text-sm">{error}</p>}
       </div>

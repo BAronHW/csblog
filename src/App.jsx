@@ -9,6 +9,7 @@ import CreateCard from './Components/CreateCard';
 import ErrorPage from './Components/ErrorPage';
 import BlogDetailPage from './Components/BlogDetailPage';
 import Hero from './Components/Hero'
+import EditBlog from './Components/editBlog';
 
 export const ThemeContext = createContext(null);
 
@@ -69,6 +70,7 @@ function App() {
             />
             <Route path='/error' element={<ErrorPage />} />
             <Route path='/blog/:id' element={<BlogDetailPage />}/>
+            <Route path='/blog/edit/:id' element={<EditBlog />}/>
           </Routes>
           <Footer />
         </div>
