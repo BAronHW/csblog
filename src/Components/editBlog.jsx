@@ -6,6 +6,8 @@ import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { db, storage } from '../Firebase';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 function EditBlog() {
   const { id } = useParams();
@@ -13,16 +15,15 @@ function EditBlog() {
   const { darkmode } = useContext(ThemeContext);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [content, setContent] = useState('');
 
   const formik = useFormik({
     initialValues: {
       title: '',
-      content: '',
       imgurl: ''
     },
     validationSchema: Yup.object({
       title: Yup.string().required('Title is required'),
-      content: Yup.string().required('Content is required'),
     }),
     onSubmit: async (values) => {
       try {
@@ -37,7 +38,7 @@ function EditBlog() {
 
         await updateDoc(doc(db, "blog", id), {
           title: values.title,
-          content: values.content,
+          content: content,
           imgurl: imgUrl
         });
 
@@ -61,9 +62,9 @@ function EditBlog() {
           const data = docSnap.data();
           formik.setValues({
             title: data.title,
-            content: data.content,
             imgurl: data.imgurl
           });
+          setContent(data.content || '');
         } else {
           setError("No such blog post!");
         }
@@ -105,15 +106,12 @@ function EditBlog() {
 
         <div>
           <label htmlFor="content" className="block text-sm font-medium mb-1">Content</label>
-          <textarea
-            id="content"
-            {...formik.getFieldProps('content')}
-            rows="10"
-            className={`w-full p-2 rounded border ${darkmode ? 'bg-gray-700 border-gray-600' : 'bg-gray-100 border-gray-300'}`}
-          ></textarea>
-          {formik.touched.content && formik.errors.content && (
-            <div className="text-red-500 mt-1">{formik.errors.content}</div>
-          )}
+          <ReactQuill 
+            theme="snow"
+            value={content}
+            onChange={setContent}
+            className={`${darkmode ? 'bg-gray-700 text-white' : 'bg-white text-gray-800'}`}
+          />
         </div>
 
         <div>
