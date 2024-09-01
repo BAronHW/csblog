@@ -15,7 +15,8 @@ function CreateCard() {
     initialValues: {
       title: '',
       content: '',
-      imgurl: ''
+      imgurl: '',
+      timesent: ''
     },
     validate: values => {
       const errors = {};
@@ -39,7 +40,8 @@ function CreateCard() {
         await addDoc(collection(db, "blog"), {
           title: values.title,
           content: values.content,
-          imgurl: imgUrl
+          imgurl: imgUrl,
+          timesent: Date.now()
         });
 
         alert('Card created successfully!');

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import BlogCard from './BlogCard'
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, orderBy, query } from "firebase/firestore";
 import { db } from '../Firebase';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
@@ -15,11 +15,13 @@ function BlogList() {
       try {
         setLoading(true);
         const blogCollection = collection(db, "blog");
-        const blogSnapshot = await getDocs(blogCollection);
+        const q = query(blogCollection, orderBy("timesent", "desc"));
+        const blogSnapshot = await getDocs(q);
         const blogList = blogSnapshot.docs.map(doc => ({
           id: doc.id,
           ...doc.data()
         }));
+        
         setBlogs(blogList);
       } catch (err) {
         console.error("Error fetching blogs: ", err);
@@ -30,6 +32,7 @@ function BlogList() {
     };
     getBlogs();
   }, []);
+
 
   if (loading) {
     return (
