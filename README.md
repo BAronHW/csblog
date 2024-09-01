@@ -19,6 +19,7 @@ This project is a personal blog platform designed to share and discuss various t
 - **Form Handling**: Formik for efficient form management
 - **Routing**: React Router for navigation
 - **State Management**: React Context API
+- **Text Input**: Quill.js for more expressive text input
 
 ## Getting Started
 
