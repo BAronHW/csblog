@@ -6,6 +6,7 @@ import Box from '@mui/material/Box';
 import { useParams, useNavigate } from 'react-router-dom';
 import { CircleX, Clock, Tag, User } from 'lucide-react';
 import { ThemeContext } from '../App';
+import DOMPurify from 'dompurify';
 
 function BlogDetailPage() {
     const [blogData, setBlogData] = useState(null);
@@ -53,6 +54,10 @@ function BlogDetailPage() {
                 setLoading(false);
             }
         }
+    }
+
+    const createMarkup = (html) => {
+        return {__html: DOMPurify.sanitize(html)};
     }
 
     if (loading) {
@@ -103,10 +108,10 @@ function BlogDetailPage() {
                             <span>{blogData.author}</span>
                         </div>
                     )}
-                    {blogData.time && (
+                    {blogData.timesent && (
                         <div className="flex items-center mb-2">
                             <Clock size={16} className="mr-2" />
-                            <span>{new Date(blogData.time).toLocaleDateString()}</span>
+                            <span>{new Date(blogData.timesent).toLocaleDateString()}</span>
                         </div>
                     )}
                     {blogData.subject && (
@@ -118,7 +123,10 @@ function BlogDetailPage() {
                 </div>
 
                 <div className={`prose max-w-none ${theme.darkmode ? 'prose-invert' : ''}`}>
-                    {blogData.content}
+                    {typeof blogData.content === 'string' && blogData.content.trim().startsWith('<') 
+                        ? <div dangerouslySetInnerHTML={createMarkup(blogData.content)} />
+                        : <p>{blogData.content}</p>
+                    }
                 </div>
             </div>
         </div>

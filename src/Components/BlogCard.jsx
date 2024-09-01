@@ -12,7 +12,17 @@ function BlogCard({ title, subject, time, img, content, id, blogNum }) {
   const [formattedDate, setFormattedDate] = useState('');
 
   const maxLength = 100;
-  const truncatedContent = content.length > maxLength ? `${content.slice(0, maxLength)}...` : content;
+  const stripHtml = (html) => {
+    const tmp = document.createElement("DIV");
+    tmp.innerHTML = html;
+    return tmp.textContent || tmp.innerText || "";
+  }
+  const plainTextContent = stripHtml(content);
+  const truncatedContent = plainTextContent.length > maxLength 
+    ? `${plainTextContent.slice(0, maxLength)}...` 
+    : plainTextContent;
+
+  
 
   useEffect(() => {
     if (time) {

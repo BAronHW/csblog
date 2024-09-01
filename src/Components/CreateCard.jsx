@@ -5,26 +5,24 @@ import { collection, addDoc } from "firebase/firestore";
 import { db, storage } from '../Firebase';
 import { useNavigate } from 'react-router';
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 function CreateCard() {
   const { darkmode } = useContext(ThemeContext);
   const navigate = useNavigate();
   const [img, setImg] = useState(null);
+  const [content, setContent] = useState('');
 
   const formik = useFormik({
     initialValues: {
       title: '',
-      content: '',
       imgurl: '',
-      timesent: ''
     },
     validate: values => {
       const errors = {};
       if (!values.title) {
         errors.title = 'Title is required';
-      }
-      if (!values.content) {
-        errors.content = 'Content is required';
       }
       return errors;
     },
@@ -39,7 +37,7 @@ function CreateCard() {
 
         await addDoc(collection(db, "blog"), {
           title: values.title,
-          content: values.content,
+          content: content,
           imgurl: imgUrl,
           timesent: Date.now()
         });
@@ -47,6 +45,7 @@ function CreateCard() {
         alert('Card created successfully!');
         resetForm();
         setImg(null);
+        setContent('');
         navigate('/');
       } catch (error) {
         console.error("Error creating card: ", error);
@@ -87,20 +86,13 @@ function CreateCard() {
             ) : null}
           </div>
           <div>
-            <label htmlFor="content" className="block text-sm font-medium mb-1">Content</label>
-            <textarea
-              id="content"
-              name="content"
-              rows="4"
-              className={`w-full p-2 rounded border ${
-                darkmode ? 'bg-slate-700 border-slate-600' : 'bg-slate-100 border-slate-300'
-              } ${formik.touched.content && formik.errors.content ? 'border-red-500' : ''}`}
-              placeholder="Enter card content"
-              {...formik.getFieldProps('content')}
-            ></textarea>
-            {formik.touched.content && formik.errors.content ? (
-              <div className="text-red-500 mt-1">{formik.errors.content}</div>
-            ) : null}
+            <label className="block text-sm font-medium mb-1">Content</label>
+            <ReactQuill 
+              theme="snow"
+              value={content}
+              onChange={setContent}
+              className={`${darkmode ? 'bg-slate-700 text-white' : 'bg-white text-slate-800'}`}
+            />
           </div>          
           <div className='flex flex-col gap-2 text-inherit'>
             <label htmlFor="img">Image Upload</label>
