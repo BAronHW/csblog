@@ -46,7 +46,6 @@ const Header = ({
       setProfilepic("");
       setUsername("");
       setIsAdmin(false);
-      navigate('/');
     }).catch((error) => {
       console.error("Logout error:", error);
     });
