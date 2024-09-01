@@ -92,6 +92,7 @@ function BlogDetailPage() {
                         src={blogData.imgurl} 
                         alt={blogData.title} 
                         className="w-full h-auto max-h-[400px] object-cover"
+                        draggable={false}
                     />
                 </div>
 

@@ -65,7 +65,7 @@ function BlogList() {
             key={blog.id}
             title={blog.title}
             subject={blog.subject}
-            time={blog.time}
+            time={blog.timesent}
             img={blog.imgurl}
             content={blog.content}
             id={blog.id}

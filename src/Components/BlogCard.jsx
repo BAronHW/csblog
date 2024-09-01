@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { ThemeContext } from '../App';
 import { db } from '../Firebase';
@@ -9,10 +9,22 @@ function BlogCard({ title, subject, time, img, content, id, blogNum }) {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [formattedDate, setFormattedDate] = useState('');
 
   const maxLength = 100;
-  const isLong = content.length > maxLength;
-  const truncatedContent = isLong ? content.slice(0, maxLength) + '...' : content;
+  const truncatedContent = content.length > maxLength ? `${content.slice(0, maxLength)}...` : content;
+
+  useEffect(() => {
+    if (time) {
+      const date = time.toDate ? time.toDate() : new Date(time);
+      const dateString = date.toLocaleDateString('en-GB', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric'
+      });
+      setFormattedDate(dateString);
+    }
+  }, [time]);
 
   const deleteThisPage = async () => {
     if (window.confirm("Are you sure you want to delete this blog post?")) {
@@ -40,6 +52,7 @@ function BlogCard({ title, subject, time, img, content, id, blogNum }) {
             src={img}
             alt={title}
             className="object-cover w-full h-full"
+            draggable={false}
           />
         ) : (
           <div className="flex items-center justify-center w-full h-full bg-gray-300 text-gray-500">
@@ -48,12 +61,13 @@ function BlogCard({ title, subject, time, img, content, id, blogNum }) {
         )}
       </div>
       <div className="p-6 flex-grow">
-        <h5 className={`mb-2 font-sans text-xl font-semibold leading-snug tracking-normal`}>
+        <h5 className="mb-2 font-sans text-xl font-semibold leading-snug tracking-normal">
           {title}
         </h5>
-        <p className={`font-sans text-base font-light leading-relaxed`}>
+        <p className="font-sans text-base font-light leading-relaxed">
           {truncatedContent}
         </p>
+        {formattedDate && <p className="text-sm text-inherit mt-2">Posted on: {formattedDate}</p>}
       </div>
       <div className="p-6 pt-0 flex flex-col gap-2">
         <Link to={`/blog/${id}`} className="block w-full">
@@ -64,24 +78,23 @@ function BlogCard({ title, subject, time, img, content, id, blogNum }) {
           </button>
         </Link>
         {theme.isAdmin && theme.loggedIn && (
-          <button
-            onClick={deleteThisPage}
-            disabled={loading}
-            className={`w-full align-middle bg-red-600 font-bold font-sans select-none text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs rounded-lg text-white shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none hover:cursor-pointer py-3 px-6 ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
-          >
-            {loading ? 'Deleting...' : 'Delete'}
-          </button>
-        )}
-        {theme.isAdmin && theme.loggedIn && (
-          <Link to={`edit/${id}`}>
+          <>
             <button
+              onClick={deleteThisPage}
               disabled={loading}
-              className={`w-full align-middle bg-orange-500 font-bold font-sans select-none text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs rounded-lg text-white shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none hover:cursor-pointer py-3 px-6 ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+              className={`w-full align-middle bg-red-600 font-bold font-sans select-none text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs rounded-lg text-white shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none hover:cursor-pointer py-3 px-6 ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
             >
-              {'Edit'}
+              {loading ? 'Deleting...' : 'Delete'}
             </button>
-          </Link>
-          
+            <Link to={`edit/${id}`} className="w-full">
+              <button
+                disabled={loading}
+                className="w-full align-middle bg-orange-500 font-bold font-sans select-none text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs rounded-lg text-white shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none hover:cursor-pointer py-3 px-6"
+              >
+                Edit
+              </button>
+            </Link>
+          </>
         )}
         {error && <p className="text-red-500 text-sm">{error}</p>}
       </div>

@@ -12,22 +12,22 @@ function Footer() {
                     <h3 className='text-xl font-semibold'>Get in touch</h3>
                     <div className='flex items-center space-x-2 hover:text-blue-400 transition-colors'>
                         <Linkedin size={20} />
-                        <a href="https://www.linkedin.com/in/aaron-wan-ho-lam/" className='hover:underline'>LinkedIn</a>
+                        <a href="https://www.linkedin.com/in/aaron-wan-ho-lam/" className=''>LinkedIn</a>
                     </div>
                     <div className='flex items-center space-x-2 hover:text-blue-400 transition-colors'>
                         <Mail size={20} />
-                        <a href="mailto:baronhw808@gmail.com" className='hover:underline'>baronhw808@gmail.com</a>
+                        <a href="mailto:baronhw808@gmail.com" className=''>baronhw808@gmail.com</a>
                     </div>
                 </div>
                 <div className='space-y-4'>
                     <h3 className='text-xl font-semibold'>Connect</h3>
                     <div className='flex items-center space-x-2 hover:text-blue-400 transition-colors'>
                         <Instagram size={20} />
-                        <a href="https://www.instagram.com/baron_hw/" className='hover:underline'>Instagram</a>
+                        <a href="https://www.instagram.com/baron_hw/" className=''>Instagram</a>
                     </div>
                     <div className='flex items-center space-x-2 hover:text-blue-400 transition-colors'>
                         <Globe size={20} />
-                        <a href="https://baron-web.netlify.app/" className='hover:underline'>My Portfolio Website</a>
+                        <a href="https://baron-web.netlify.app/" className=''>My Portfolio Website</a>
                     </div>
                 </div>
             </div>
